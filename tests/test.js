@@ -52,13 +52,16 @@ describe('test suite', () => {
       it('returns 1 (Monday) for March 1, 2100', () => {
         expect(zellers.getDay(2100, 3, 1)).to.equal(1);
       });
-      it('returns 0 (Sunday) for March 2, 2200', () => {
+      it('returns 0 (Sunday) for March 1, 2200', () => {
         expect(zellers.getDay(2200, 3, 2)).to.equal(0);
       });
-      it('returns 4 (Thurs) for March 3, 2300', () => {
+      it('returns 4 (Thurs) for March 1, 2300', () => {
         expect(zellers.getDay(2300, 3, 1)).to.equal(4);
       });
-    describe('get month', () => {
+      it('returns 3 (Wed) for January 1, 2014', () => {
+        expect(zellers.getDay(2014, 1, 1)).to.equal(3);
+      });
+      describe('get month', () => {
       it('returns ......January for 2016, 1', () => {
         expect(getMonth(2016, 1)).to.equal("      January ");
        });
@@ -117,10 +120,10 @@ describe('test suite', () => {
      describe('Inject correct number of spaces on first week', () => {
       const makeMonth = require('../lib/makeMonth.js');
       it('returns an array of 1-31 for January', () => {
-        expect(makeMonth.makeLengthArray(2016, 1, 1)).to.equal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31])
+        expect(makeMonth.makeLengthArray(2015, 1, 1)).to.equal([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31])
       });
       it('returns a string, replacing commas with spaces', () => {
-        expect(makeMonth.arrayToString(2016, 3, 1)).to.equal(" 1,  2,  3,  4,  5,  6");
+        expect(makeMonth.arrayToString(2015, 1, 1)).to.equal(" 1,  2,  3,  4,  5,  6");
       });
      });
    });
