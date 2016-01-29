@@ -9,13 +9,13 @@ const makeMonthCal = getCalendar.arrayToString;
 if (args.length === 2) {
    const [month, year] = args;
    let requestedMonth = args[1];
-   console.log("requestedMonth:", requestedMonth);
+   //console.log("requestedMonth:", requestedMonth);
    let requestedYear = args[0];
-   console.log("requestedYear", requestedYear);
+   //console.log("requestedYear", requestedYear);
 } else if (args.length === 1) {
   const [year] = args;
 
-  console.log(`generateYear(${year}`);
+  //console.log(`generateYear(${year}`);
 }else {
   let today = new Date();
   let currentMonth = today.getMonth() + 1;
@@ -27,3 +27,4 @@ if (args.length === 2) {
 //console.log(args);
 
 //console.log("process.argv", process.argv);
+
