@@ -1,3 +1,4 @@
+"use strict"
 const {expect} = require('chai');
 
 const {execSync} = require('child_process');
@@ -17,6 +18,10 @@ describe('test suite', () => {
 
     const getMonth = require('../lib/getMonth.js');
     console.log("get month module:", getMonth());
+    const makeMonth = require('../lib/makeMonth.js');
+
+    
+    const getFirstLine = require('../lib/getFirstLine.js')
 
     describe('.modifiedMonth', () => {
       it('return 13 for January', () => {
@@ -63,46 +68,18 @@ describe('test suite', () => {
       });
       describe('get month', () => {
       it('returns ......January for 2016, 1', () => {
-        expect(getMonth(2016, 1)).to.equal("      January ");
+        expect(getFirstLine(2016, 1)).to.equal("    January 2016");
        });
       it('returns ......February for 2016, 2', () => {
-        expect(getMonth(2016, 2)).to.equal("      February ");
+        expect(getFirstLine(2016, 2)).to.equal("   February 2016");
        });
       it('returns ......March for 2016, 3', () => {
-        expect(getMonth(2016, 3)).to.equal("       March ");
-       });
-      it('returns ......April for 2016, 4', () => {
-        expect(getMonth(2016, 4)).to.equal("       April ");
-       });
-      it('returns ......May for 2016, 5', () => {
-        expect(getMonth(2016, 5)).to.equal("        May ");
-       });
-      it('returns ......June for 2016, 6', () => {
-        expect(getMonth(2016, 6)).to.equal("        June ");
-       });
-      it('returns ......July for 2016, 7', () => {
-        expect(getMonth(2016, 7)).to.equal("        July ");
-       });
-      it('returns ......August for 2016, 8', () => {
-        expect(getMonth(2016, 8)).to.equal("       August ");
-       });
-      it('returns ......September for 2016, 9', () => {
-        expect(getMonth(2016, 9)).to.equal("     September ");
-       });
-      it('returns ......October for 2016, 10', () => {
-        expect(getMonth(2016, 10)).to.equal("      October ");
-       });
-      it('returns ......November for 2016, 11', () => {
-        expect(getMonth(2016, 11)).to.equal("      November ");
-       });
-      it('returns ......December for 2016, 12', () => {
-        expect(getMonth(2016, 12)).to.equal("      December ");
+        expect(getFirstLine(2016, 3)).to.equal("     March 2016");
        });
      });
      describe('get month AND year', () => {
-      const getFirstLine = require('../lib/getFirstLine.js')
       it('returns Febrary 2016 for 2016 2', () => {
-        expect(getFirstLine(2016, 2)).to.equal("      February 2016");
+        expect(getFirstLine(2016, 2)).to.equal("   February 2016");
       });
      });
      describe('get length of month', () => {
@@ -132,21 +109,38 @@ describe('test suite', () => {
       it('return 29 days in Feb 2012', () => {
         expect(leapYear.leapYearTest(2012)).to.equal(true);
       });
-      it('returns 30 days in Feb 2014', () => {
+      it('returns 28 days in Feb 2014', () => {
         expect(leapYear.leapYearTest(2014)).to.equal(false);
+      });
+      it('displays 29 days for Feb 2012', () => {
+        expect(makeMonth.arrayToString(2012, 2, 1) + "\n").to.equal(execSync('cal February 2012').toString());
+      });
+      it('displays 28 days for Feb 2014', () => {
+        expect(makeMonth.arrayToString(2014, 2, 1) + "\n").to.equal(execSync('cal February 2014').toString());
       });
     });
     describe('Should be able to handle 5 week months', () => {
-      const makeMonth = require('../lib/makeMonth.js');
 
        it('returns 6 "week lines" for five week month', () => {
-       expect(makeMonth.arrayToString(2015, 10, 1)).to.equal(execSync('cal October 2015').toString());
+       expect(makeMonth.arrayToString(2015, 10, 1) + "\n").to.equal(execSync('cal October 2015').toString());
       });
       it('returns 6 "week lines" for four week month', () => {
-       expect(makeMonth.arrayToString(2014, 2, 1)).to.equal(execSync('cal February 2014').toString());
+       expect(makeMonth.arrayToString(2014, 2, 1) + "\n").to.equal(execSync('cal February 2014').toString());
       });
     });
    });
   });
+describe('Make Year', () => {
+  const createYear = require('../lib/createYear.js');
+  it('should handle a specified year', () => {
+    let goal = execSync('cal 2016').toString().split("\n");
+    let output = execSync('./cal.js 2016').toString().split("\n");
+        expect(output).to.equal(goal);
+    });
+  it('should create an array of month headers', () => {
+      expect(createYear.createMonthHeaders(2016)).to.equal(execSync('cal 2016').toString());
+    });
+  });
+
 });
 
