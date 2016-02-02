@@ -140,6 +140,12 @@ describe('Make Year', () => {
   it('should create an array of month headers', () => {
       expect(createYear.createMonthHeaders(2016)).to.equal(execSync('cal 2016').toString());
     });
+  it('should create arrays for each week', () => {
+      expect(createYear.createMonthNumStrings(2016)).to.equal(execSync('cal 2016').toString());
+    });
+  it('should display 4 rows of 3 weeks', () => {
+      expect(createYear.createYearCal(2016)).to.equal(execSync('cal 2016').toString());
+    });
   });
 
 });
